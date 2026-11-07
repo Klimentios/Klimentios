@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320" role="img" aria-labelledby="title desc">
+  <title id="title">Kliment — infrastructure, automation, AI workflows</title>
+  <desc id="desc">Dark navy professional banner with restrained cyan and warm orange accents.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07131f"/>
+      <stop offset="0.55" stop-color="#0d2335"/>
+      <stop offset="1" stop-color="#13283a"/>
+    </linearGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#43c6d5"/>
+      <stop offset="0.72" stop-color="#43c6d5"/>
+      <stop offset="1" stop-color="#f7a566"/>
+    </linearGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#8fb7c8" stroke-opacity=".09" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="320" rx="24" fill="url(#bg)"/>
+  <rect width="1200" height="320" rx="24" fill="url(#grid)"/>
+  <path d="M72 72h1056" stroke="url(#line)" stroke-width="2" opacity=".9"/>
+  <path d="M72 248h1056" stroke="#8fb7c8" stroke-opacity=".28"/>
+  <circle cx="1090" cy="158" r="80" fill="none" stroke="#43c6d5" stroke-opacity=".28" stroke-width="2"/>
+  <circle cx="1090" cy="158" r="54" fill="none" stroke="#f7a566" stroke-opacity=".38" stroke-width="2"/>
+  <path d="M1064 133v50m0-25 47-25m-47 25 47 25" fill="none" stroke="#d8edf3" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="72" y="157" fill="#f5f8fa" font-family="Arial, Helvetica, sans-serif" font-size="66" font-weight="700" letter-spacing="3">KLIMENT</text>
+  <text x="74" y="210" fill="#b9d4de" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="500" letter-spacing="3">INFRASTRUCTURE  /  AUTOMATION  /  AI WORKFLOWS</text>
+</svg>
