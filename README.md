@@ -1,13 +1,13 @@
-# Hi, I'm Kliment 👋
+# Kliment
 
-I’m an IT Infrastructure Engineer with 11+ years of experience in systems administration, infrastructure management, and security systems integration.
+**IT Infrastructure Engineer** with 11+ years of experience in systems administration, infrastructure management, and security systems integration.
 
-### What I focus on
+## Areas of focus
 
-- Building and maintaining reliable IT systems
-- Infrastructure and security systems integration
-- Automation that makes everyday work simpler
+- Reliable systems and practical infrastructure operations
+- Security systems integration
+- Automation and clear, repeatable workflows
 
-I also explore AI production workflows and web products. I’ll share projects here as they’re ready for others to use.
+I also work with AI production workflows and web products.
 
-[Connect with me on LinkedIn](https://www.linkedin.com/in/kliment-athanasov/)
+[LinkedIn](https://www.linkedin.com/in/kliment-athanasov/)
