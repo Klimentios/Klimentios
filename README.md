@@ -1,4 +1,4 @@
-# Kliment
+![Kliment — infrastructure, automation, and AI workflows](./kliment-profile-banner.svg)
 
 **IT Infrastructure Engineer** with 11+ years of experience in systems administration, infrastructure management, and security systems integration.
 
