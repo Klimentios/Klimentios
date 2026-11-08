@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320" role="img" aria-labelledby="title desc">
-  <title id="title">Kliment — infrastructure, automation, AI workflows</title>
+  <title id="title">Kliment — AI products, software, automation</title>
   <desc id="desc">Dark navy professional banner with restrained cyan and warm orange accents.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
@@ -24,5 +24,5 @@
   <circle cx="1090" cy="158" r="54" fill="none" stroke="#f7a566" stroke-opacity=".38" stroke-width="2"/>
   <path d="M1064 133v50m0-25 47-25m-47 25 47 25" fill="none" stroke="#d8edf3" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
   <text x="72" y="157" fill="#f5f8fa" font-family="Arial, Helvetica, sans-serif" font-size="66" font-weight="700" letter-spacing="3">KLIMENT</text>
-  <text x="74" y="210" fill="#b9d4de" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="500" letter-spacing="3">INFRASTRUCTURE  /  AUTOMATION  /  AI WORKFLOWS</text>
+  <text x="74" y="210" fill="#b9d4de" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="500" letter-spacing="3">AI PRODUCTS  /  SOFTWARE  /  AUTOMATION</text>
 </svg>
