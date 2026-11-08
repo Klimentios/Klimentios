@@ -4,7 +4,7 @@
 
 I run the released **MiniMax H3-Base** on rented GPUs for original character projects. My hard task is preserving a source video's actions, camera and edit while replacing performers, or replacing both performers and the world. A plausible clip can still fail the assignment. I consolidated our render logs, code probes, shot reviews and accepted/rejected takes. This article publishes the useful parameters and limits of that evidence.
 
-**Data:** The [measurement ledger](minimax-h3-evidence.md) publishes the recorded settings, timing A/B, take IDs, probe counts and contradictory cases behind this account.
+**Full research:** The [6,800-word Russian field study](minimax-h3-full-research-ru.md) contains the complete experiment map, architecture/code inspection, attention probes, A/B tables, six accepted recipes, failure taxonomy, infrastructure findings, contradictions and chronology. The [measurement ledger](minimax-h3-evidence.md) publishes a compact extract of settings, timing A/B, take IDs and probe counts. This English article is a summary of the full study.
 
 ## The model and the actual input path
 
