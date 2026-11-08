@@ -23,15 +23,35 @@ These are direct screenshots of the public Studio build in English, opened with 
 
 ![TaleMondo Studio video generation workspace in English](media/talemondo/studio-video-generation.png)
 
+**Scene board:** one workspace connects scene materials, individual shots and the final film. The isolated capture starts with one empty five-second shot; it shows planning controls, not a rendered film.
+
+![TaleMondo Studio scene board in English](media/talemondo/studio-scene-board.png)
+
 **Custom workflows:** a ComfyUI graph can be imported from JSON, a connected ComfyUI instance, or an existing job or recipe. The separate showcase data directory has no imported graphs yet.
 
 ![TaleMondo Studio custom ComfyUI workflows page in English](media/talemondo/studio-custom-workflows.png)
+
+## The ComfyUI-to-Studio loop
+
+Studio embeds the real ComfyUI editor when a connected server is available. Its bridge adds a **“Workflow to Studio”** action inside ComfyUI. A graph sent through that action arrives in Studio's workflow inbox. Studio detects useful inputs such as images, video, audio, prompts and seeds, then presents selected inputs as a form. The workflow can also be run through the local REST API or the `workflow_run` MCP tool.
+
+The route works in both directions: **Open in ComfyUI** sends a saved Studio graph to the editor; **Workflow to Studio** returns edits to that same workflow. Studio retains revisions, so earlier graph versions can be inspected and restored. A job graph or an accepted recipe can also be forked into a separate custom workflow without changing the original job or recipe. The [UI](https://github.com/Klimentios/talemondo-studio/blob/main/preview/h3-director/workflows.mjs), [workflow API](https://github.com/Klimentios/talemondo-studio/blob/main/local_studio/user_workflows.py), and [ComfyUI bridge](https://github.com/Klimentios/talemondo-studio/tree/main/app/comfy_nodes/h3_studio_bridge) are in the public source.
+
+```text
+ComfyUI graph → Workflow to Studio → input form / API / MCP → queue and review
+       ↑                                             │
+       └──────── Open in ComfyUI ← saved revision ──┘
+```
+
+This loop requires a running, compatible ComfyUI server and the Studio bridge extension. The isolated screenshots above have no connected GPU, so they document the interface rather than a live round-trip demonstration.
 
 ## ComfyUI without losing the production context
 
 The built-in H3 route exposes quality and director controls, including guides at specific frames, sampling settings, model profiles and optional LoRAs. The separate **Custom Workflows** area can import a ComfyUI API graph, identify inputs, turn them into a Studio form and queue the graph on a connected ComfyUI server. Its graph editor can change values, nodes and links, record versions and bring a graph back from a job or recipe. These are actual modules and endpoints in the public code; compatibility still depends on the installed nodes and models on a live server.
 
 The code includes a first-run Mac setup, GPU installation and verification scripts, and a route for adding pinned ComfyUI nodes and models. Model weights, GPU hardware and private project data are not included in the repository. See its [README](https://github.com/Klimentios/talemondo-studio#readme) for requirements and the [source tree](https://github.com/Klimentios/talemondo-studio/tree/main) for the implementation.
+
+**What the repository contains:** the Studio application, its ComfyUI bridge and custom nodes, GPU API, MCP server, tests, pinned installation scripts, and model download instructions. **What it does not contain:** MiniMax H3, Qwen, LoRA or other model weight files. The installer fetches public upstream weights onto the user's GPU server; those weights have their own licences and are not authored by me. This distinction matters for anyone cloning the repository or assessing storage requirements.
 
 ## Coding agents can operate the same studio
 
