@@ -1,6 +1,11 @@
 # MiniMax H3 field study: published measurement ledger
 
-This ledger accompanies the [field study](minimax-h3-field-notes.md). It exposes the recorded numbers, input settings, controls and disagreements used in the article. The source footage and generated MP4s are not redistributed here; job IDs are internal, and visual acceptance is a first-party editorial decision.
+This ledger accompanies the [field study](minimax-h3-field-notes.md). It exposes the recorded numbers, input settings, controls and disagreements used in the article. Two side-by-side rendered comparisons are public: [cut timing](media/h3-cut-timing-range-vs-at.mp4) and [Safe cache](media/h3-cache-off-vs-safe.mp4). Other source footage and generated MP4s are not redistributed here. Job IDs are internal, and visual acceptance is a first-party editorial decision.
+
+| Published comparison | Layout | SHA-256 of the published MP4 |
+|---|---|---|
+| [Cut timing](media/h3-cut-timing-range-vs-at.mp4) | Range form left, explicit “At” form right | `1de12f01e30d5d23ee2391422b452fc6764a24b1109fe2498c8bc0e64809611a` |
+| [Safe cache](media/h3-cache-off-vs-safe.mp4) | Cache off left, Safe right | `649e205e2df1b96c675c1a3feb6a33784bb5798ad23b896fb7fac36efe084c10` |
 
 ## Production cache A/B: job `c3966a23`, 6 November 2026
 
@@ -15,7 +20,7 @@ Calculated total-time change: **(934.5 − 717.8) / 934.5 = 23.2%**. Recorded fr
 
 ## Shot timing: source edit versus written cut
 
-Source record: `docs/reference/H3_ENCODER_RESEARCH.md`, “Формат склеек” and “Доказательство на рабочем дубле”, with A/B folders `logs/ab-2026-11-06-154433-night-range` and `logs/ab-2026-11-06-155425-night-official`.
+Source record: the shot-timing and production-take sections of the internal `docs/reference/H3_ENCODER_RESEARCH.md`, with A/B folders `logs/ab-2026-11-06-154433-night-range` and `logs/ab-2026-11-06-155425-night-official`.
 
 | Scene / written form | Target cut(s), s | Observed cut(s), s | Error, s |
 |---|---|---|---|
@@ -29,7 +34,7 @@ The production comparison retained the seed and references, changing the timing 
 
 ## Accepted and rejected take boundaries
 
-Source record: `docs/reference/MINIMAX_H3_RESEARCH.md` §7 and `docs/DECISIONS.md`. These are user-reviewed outcomes, not public model benchmarks.
+Source record: the accepted-recipe section of internal `docs/reference/MINIMAX_H3_RESEARCH.md` and `docs/DECISIONS.md`. These are user-reviewed outcomes, not public model benchmarks.
 
 | Job | Input setup | Observed outcome |
 |---|---|---|
@@ -45,7 +50,7 @@ The two character contrasts are *not isolated image-count experiments*: shot gui
 
 ## Instrumented local graph
 
-Source record: `docs/reference/H3_ENCODER_RESEARCH.md` § “Зонд на рабочем дубле”, five sampled denoising steps × six transformer blocks, approximately 512 sampled video positions. Accepted job `c3966a23` had **75,408** packed tokens: 12,310 Qwen encoder; 37,506 target-video; 14,112 source-video; 526 audio; remainder reference and guide latents. Sampled attention to the Qwen code: 10.6%; each 798-token shot guide: ~1.7%; source video: 4.3%; each character face/body image: 0.3–0.5%. These are probe readouts, **not causal effects** or a complete attention census.
+Source record: the production-take probe section of internal `docs/reference/H3_ENCODER_RESEARCH.md`, five sampled denoising steps × six transformer blocks, approximately 512 sampled video positions. Accepted job `c3966a23` had **75,408** packed tokens: 12,310 Qwen encoder; 37,506 target-video; 14,112 source-video; 526 audio; remainder reference and guide latents. Sampled attention to the Qwen code: 10.6%; each 798-token shot guide: ~1.7%; source video: 4.3%; each character face/body image: 0.3–0.5%. These are probe readouts, **not causal effects** or a complete attention census.
 
 Another encoder probe compared the same image under different later prompts and found cosine similarity **0.9999993**. It supports the narrower observation that the causal encoder has not read later text while encoding earlier image tokens; it does not imply text has no influence on generation.
 
@@ -55,4 +60,4 @@ Source record: `docs/reference/MINIMAX_H3_RESEARCH.md` §8.1. The production rev
 
 ## Source boundaries
 
-Official architecture, checkpoint limits, input modes and hosted/local split come from [MiniMax's model card](https://huggingface.co/MiniMaxAI/MiniMax-H3) and [repository](https://github.com/MiniMax-AI/MiniMax-H3). Every number and verdict in this ledger is from first-party Studio records. This published ledger is a transparent extract; it is **not** an independently reproducible media dataset.
+Official architecture, checkpoint limits, input modes and hosted/local split come from [MiniMax's model card](https://huggingface.co/MiniMaxAI/MiniMax-H3) and [repository](https://github.com/MiniMax-AI/MiniMax-H3). Every number and verdict in this ledger is from first-party Studio records. The two linked MP4s let readers inspect those particular comparisons. This ledger is still **not** a complete independently reproducible dataset for all reported takes.

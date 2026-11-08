@@ -4,7 +4,7 @@
 
 I run the released **MiniMax H3-Base** on rented GPUs for original character projects. My hard task is preserving a source video's actions, camera and edit while replacing performers, or replacing both performers and the world. A plausible clip can still fail the assignment. I consolidated our render logs, code probes, shot reviews and accepted/rejected takes. This article publishes the useful parameters and limits of that evidence.
 
-**Data:** The [measurement ledger](minimax-h3-evidence.md) publishes settings, timing A/B, take IDs and probe counts. All public text here is in English.
+**Data:** The [measurement ledger](minimax-h3-evidence.md) publishes settings, timing A/B, take IDs and probe counts.
 
 ## The model and the actual input path
 
@@ -12,7 +12,21 @@ MiniMax describes the full system as **Context-IR → H3-Base → Regenerate-2K*
 
 Officially, Qwen3-VL-32B supplies layer-50 encoder states; visual material also enters through a video VAE, audio through its own VAE, and a 33B single-stream transformer generates the output latents. The published inference release uses full attention. Those are **model facts from MiniMax**, not findings of my tests. See the [architecture and example requests](https://huggingface.co/MiniMaxAI/MiniMax-H3) and [released repository](https://github.com/MiniMax-AI/MiniMax-H3).
 
-Our inspection of the local ComfyUI path found that numbered image and video references are assembled *before* the task text for the causal Qwen encoder. Video is sampled at 2 fps for encoder frames; its visual latents also enter generation. Audio has a separate path. In a probe, image encodings under two different later text prompts had cosine similarity **0.9999993**. The image encoder had not read that later wording, although the generation transformer still sees the combined context. This makes explicit reference mapping valuable: name `<Picture N>` and `<Video N>` consistently, then say whether each supplies identity, source scene, motion, target room or voice. MiniMax's [official Ref2VA example](https://huggingface.co/MiniMaxAI/MiniMax-H3) likewise names the numbered video/audio inputs and states what to preserve or reuse.
+Our inspection of the local ComfyUI path found that numbered image and video references are assembled *before* the task text for the causal Qwen encoder. Video is sampled at 2 fps for encoder frames; its visual latents also enter generation. Audio has a separate path. In a probe, image encodings under two different later text prompts had cosine similarity **0.9999993**. Qwen had not read that later wording while encoding the earlier image tokens, although the generation transformer still sees the combined context. This makes explicit reference mapping valuable: name `<Picture N>` and `<Video N>` consistently, then say whether each supplies identity, source scene, motion, target room or voice. MiniMax's [official Ref2VA example](https://huggingface.co/MiniMaxAI/MiniMax-H3) likewise names the numbered video/audio inputs and states what to preserve or reuse.
+
+### A frame and a prompt do not become a single “Qwen prompt”
+
+The distinction matters because practitioners can easily mistake three different stages for one model call:
+
+1. **Studio prepares the job.** It selects the source segment, still images, optional audio, target length and resolution, and a written shot description. Some Studio routes used a separate Qwen-based *prompt rewriter* before inference. That rewriter is an application feature; it is not the H3-Encoder. We found routes where its extra boilerplate diluted the action text, and routes where form fields were dropped before inference.
+2. **The local Ref2VA node assembles encoder input.** It numbers references and places their image/video tokens before the written task text. In this implementation the encoder sees sampled video frames at 2 fps. A literal `<Picture 1>` written in the task text is not itself an image token; its number must match the file order. Audio is represented by a label for this encoder path and carried separately through the audio path.
+3. **Qwen3-VL-32B encodes that sequence.** The H3-Encoder exports hidden states from layer 50, as MiniMax documents. Because this path is causal, an earlier image token cannot incorporate words appended after it. Later text tokens *can* incorporate earlier visual context. The local probe's near-identical image states under two later prompts tested exactly that narrow property.
+4. **The visual and audio VAEs encode references again as latents.** H3 therefore receives both Qwen's multimodal contextual states and lower-level visual/audio latent sequences. This explains why reducing the text length alone may have little effect on a long reference-video job: the target and source latents can dominate the packed sequence.
+5. **The H3 transformer jointly generates target video and audio latents.** The released local path uses a single packed sequence and full attention, then decodes the generated latents into an MP4 with sound. Text remains relevant inside this transformer. The fact that Qwen encoded an image before reading later instructions does **not** mean the final video ignores those instructions.
+
+For a concrete input contract, consider a performer replacement. In Studio, `<Video 1>` identifies the source shot to edit, `<Picture 1>` identifies the replacement character, and the shot text states which source performer maps to that character, what remains in the room, and when the action occurs. For a world change, the same video instead supplies movement and cuts, while numbered target-world images specify the new room at those cuts. These are **two task descriptions over Ref2VA**, not two H3 checkpoints.
+
+An additional local test separated encoder cost from model-loading cost. We saved the complete 48 MB prepared Ref2VA input, removed Qwen and image-loading nodes, and replayed the saved input into H3. On the same warmed host, the resulting MP4 matched byte-for-byte; the run took **193 s** versus **198 s** with Qwen. A colder 243-second run was slower mainly because it loaded weights. This is evidence that *reusing an already encoded input* can reproduce that take and save roughly five seconds of warm encoding. It does **not** show that H3 can understand new text or images without the H3-Encoder; new inputs must be encoded again. The separate Safe-cache A/B later in this article is a denoising optimization, not this encoder-input replay.
 
 | Input | Task role in our workflow | Preflight check |
 |---|---|---|
@@ -47,6 +61,8 @@ In a same-scene test, bracketed ranges such as `[Shot 2: 2.5–5 s]` placed a re
 
 Counterexample: production takes `51702081` and `9140992b` used ranges yet matched source cuts within about 0.02 s. The source edit appears to be a strong timing cue. Overnight failures also showed why segment preparation matters: round-second trims left 0.33–0.68-second tails from neighboring shots, shifting subsequent events. I map and cut the source edit first, then write explicit cut events. Sub-second shots can still disappear.
 
+**Watch the production comparison:** [range syntax on the left, explicit “At” syntax on the right](media/h3-cut-timing-range-vs-at.mp4). Both are rendered outputs from the same local timing experiment, not the untouched source video. The [preview frame](media/h3-cut-timing-preview.jpg) helps identify the two sides, but the measured cut displacement requires watching the video.
+
 ## 4. What the prompt probes support
 
 Across 10–24 real production jobs, sampled video-token attention was approximately **63–84% to target video**, **11–16% to reference latents**, **3–6% to Qwen visual tokens** and **3–7% to prompt text**. These are descriptive probe shares, not a ranking of causal control. A section analysis of ten jobs found shot/action prose drew about **2.1×** its token-share attention in one sampled block, while character prose drew **0.5×** and later **0.3×**. This supports placing identity in coherent images and using text for actions, shots and expression; it does not prove character words are useless.
@@ -68,6 +84,8 @@ A ten-second replacement estimate contained about **68k source-video**, **58k ta
 | One four-step turbo case | 485 → 140 s | Faster motion was rejected |
 
 The 59 production replacements logged on 22 October ran roughly **7 / 19 / 39 minutes** for 5 / 10 / 15-second jobs, with varying input complexity. A 250–300 W RTX PRO 6000 Max-Q was roughly 2.5× slower than a full-power server version in comparable long replacements. In our BF16 setup a 96 GB card could not retain both H3 and Qwen simultaneously; disk reloads sometimes added 10–12 minutes. Different hosts and graphs prevent a clean universal performance ranking. Cache is one operational detail, **not** the study's thesis; Fast and turbo paths were rejected for relevant production quality.
+
+**Watch the production A/B:** [cache off on the left, Safe on the right](media/h3-cache-off-vs-safe.mp4). The [preview frame](media/h3-cache-preview.jpg) shows the side-by-side layout. Visual similarity in this one take supports the logged review; it does not establish that every frame is identical or that Safe is suitable for every scene.
 
 ## 6. The failed overnight batch
 
@@ -149,7 +167,7 @@ Next defensible experiments are multi-seed tests on *accepted character footage*
 
 ## Evidence ledger and unresolved questions
 
-These identifiers and measurements come from KADRIA / H3 Studio records and are expanded in the [published ledger](minimax-h3-evidence.md). IDs are internal identifiers, not public video links. The source media and full logs are not attached here, so external readers cannot independently reproduce the visual verdicts. The table gives parameters and scope instead of implying a public benchmark.
+These identifiers and measurements come from KADRIA / H3 Studio records and are expanded in the [published ledger](minimax-h3-evidence.md). The two side-by-side MP4s above expose the **timing** and **Safe-cache** comparisons. Other job IDs are internal identifiers, not public video links; their source clips and full logs are not attached. Readers can inspect the two published comparisons, but cannot reproduce the other visual verdicts from this repository alone.
 
 | Evidence | Claim status |
 |---|---|
