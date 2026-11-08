@@ -6,6 +6,7 @@ I use [MiniMax H3](https://huggingface.co/MiniMaxAI/MiniMax-H3) on rented GPUs t
 
 Here are three findings from accepted short clips, failed attempts, and one controlled render comparison. These are observations from my workflow, not universal claims about the model.
 
+**Model vs. workflow terminology.** The released H3-Base checkpoints are **FL2VA** (text and optional first/last frames) and **Ref2VA** (text plus image, video, or audio references). My “character swap” and “world change” labels describe how I arrange references and shot guidance in my Studio around Ref2VA; they are not official H3 model variants. The official H3-Context-IR and H3-Regenerate-2K stages are hosted services and were not part of this local H3-Base A/B. See the [official model card](https://huggingface.co/MiniMaxAI/MiniMax-H3).
 ## 1. Decide what the source video controls
 
 I use two distinct workflows. When I want to replace a performer while preserving the original location, I feed the source as video and use character swap. When I need a different environment as well, treating that same video as the visual source can keep pulling the result back toward its original room.
