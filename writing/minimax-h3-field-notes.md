@@ -4,7 +4,7 @@
 
 I run the released **MiniMax H3-Base** on rented GPUs for original character projects. My hard task is preserving a source video's actions, camera and edit while replacing performers, or replacing both performers and the world. A plausible clip can still fail the assignment. I consolidated our render logs, code probes, shot reviews and accepted/rejected takes. This article publishes the useful parameters and limits of that evidence.
 
-**Data:** The [measurement ledger](minimax-h3-evidence.md) publishes settings, timing A/B, take IDs and probe counts. This English article is being expanded from the full internal research record.
+**Data:** The [measurement ledger](minimax-h3-evidence.md) publishes settings, timing A/B, take IDs and probe counts. All public text here is in English.
 
 ## The model and the actual input path
 
@@ -74,6 +74,78 @@ The 59 production replacements logged on 22 October ran roughly **7 / 19 / 39 mi
 On 5–6 November, an overnight run used about seven hours of rented GPU time. Records disagree between **24 and 26 rejected outputs**, so I retain that range. In a 24-item defect review, **23** had environment errors, **17** displaced timing, **17** invented moments, **12** identity errors and **11** original performers remaining; categories overlap. The batch combined an experimental replacement route with world-change requests, overlong whole-film descriptions in short segments, arbitrary time cuts, guide lists that could be empty, and no review of the first complete render before filling the queue.
 
 The production rule that followed is concrete: map source cuts → assign input roles → inspect guides and compiled prompt → render **one** full segment → compare every action, identity, edit and sound with the source → record an explicit human acceptance → scale. A saved MP4 is a pipeline event, not editorial acceptance.
+
+## 7. More accepted takes, and why they matter
+
+An acceptance is a boundary around a *specific* media result, not a transferable preset. Our internal register contains six production takes that were accepted for their stated purpose. They did not all use the same cache, duration, resolution, prompt length or reference count:
+
+| Take | Task and input package | Recorded result and limit |
+|---|---|---|
+| `5a4cd625` (4 Oct) | Still-image scene; character, face and environment images; 640×1152, 15 s, 25 steps, Fast cache | Accepted as a strong scene. This directly conflicts with the later blanket rejection of Fast cache; it is not evidence that Fast always works. |
+| `587a1743` (5 Oct) | Face/costume images and a movement video; 5 s, about 0.9 MP, 24 steps, Safe | Likeness and dance accepted; the camera moved into an unwanted close-up late in the clip. |
+| `9896b951` (16 Oct) | Single full-character replacement; 608×1056, 10 s, Safe, seed 22022216 | Accepted; rendered in 17.6 min. Contrast with face-only failure `26fb9bf6`. |
+| `19715bfb` (22 Oct) | Two full-character images, shot map; 640×1152, 3,682-character prompt, Safe | Two-character replacement accepted; about 27 min. |
+| `c3966a23` (5 Nov) | World change, source motion/camera, eight images, guide frames at cuts, 672×1216, 24 steps, cache off | **Only the first segment** accepted. Later Safe-cache use was a separate controlled A/B. |
+| `c683def1` (6 Nov) | 4:3 world change with an additional guide inside a long shot | Cleared for continuation; hand-held props simplified. |
+
+Two other takes are useful *visual* references but not complete recipes. `a60f8972` was praised for graphics, acting and expression, yet its body anatomy was imperfect. `0c31262c` was a look/grade reference while its story continuity failed. Treating either as a wholly accepted scene would erase the user's actual review.
+
+The replacement recipe arose from a small campaign of four useful and eleven failed attempts. Its robust elements are a source-to-target performer map, full-body identity references, a shot map, and segment boundaries at source cuts. The successful prompts were roughly 2,900–3,700 characters; this is an observed band, **not** a hard H3 token limit. A close-up sometimes needed an extra face image. Crowds and three-plus mappings were unreliable in this campaign. These are Studio production rules with specific prior failures, not statements that H3 cannot ever render a crowd.
+
+For world changes, the reference must be treated differently. We detect source edits, prepare a target frame for each new shot, and add a frame inside a long pan or orbit when identity/room mapping drifts. The first guide belongs at frame zero. The guide is checked against the character bible for eyes, markings, height, anatomy and costume before GPU submission. This is how a reference package becomes an actual edit contract rather than a pile of uploaded media.
+
+## 8. Parameter experiments that did *not* justify new defaults
+
+Most controlled parameter tests used one synthetic sailor scene (seed 424242, five seconds, 672×1216, 24 steps) that was later rejected as a production benchmark. It was useful for isolating variables, but visual rankings from it cannot be promoted to universal production advice.
+
+| Change from local baseline | Measured sampling / total | Observed interpretation |
+|---|---:|---|
+| Baseline with Safe cache | 179 / 198 s | Reference for this scene only |
+| Cache off | 237 / 256 s | Similar staging; PSNR 34.4 dB to baseline |
+| Beta scheduler | 218 / 237 s | Different take; no clear quality win |
+| Shift 8 / shift 16 | 180 / 199 s; 170 / 189 s | Different noise trajectories; no clear quality win |
+| Output 768×1344 instead of 672×1216 | 247 / 268 s | More facial detail in one view, changed composition, 35% more total time |
+| SageAttention 1.0.6 | 186 s sampling versus 180 s | 3.5% *slower* on this Blackwell setup; no reason to enable from this test |
+
+We also compared `ref_image_size=match` with `max`. Recorded total-time reductions varied with the task: about 22% twice for a five-image character scene, 13% for another replacement, 3.5% for a ten-second replacement, and 6% for the one-image synthetic test. For the accepted eight-image world-change take, a circulated “14%” figure was **not supported by a completed timing log**. File timestamps give only an approximate 10% upper-bound comparison. Close-up identity was not visibly worse in reviewed pairs, but a one-seed visual check does not guarantee that for other scenes. That is why the full accepted recipe remains separately recorded.
+
+On one 300 W Max-Q card, a BF16/24-step character case took 485 s; INT8 took 648 s and W4A8 710 s. Four-step turbo finished in about 140 s but its motion was rejected. These numbers show why “fewer bits” and “fewer steps” cannot be equated with usable throughput. They are host- and implementation-specific.
+
+LoRA tests also have narrow boundaries. In the synthetic round, a face-realism adapter improved apparent human skin detail, while a different realism adapter shifted color toward orange; a camera-motion adapter increased the apparent orbit. Those were **one-scene leads**. Character Swap v1 appeared in accepted replacement recipes, whereas v1.5 failed to replace a source performer in a later batch. No claim here is that one LoRA version is generally superior across subjects.
+
+## 9. Where the money and time went
+
+Our BF16 deployment needed roughly 63 GB of GPU memory for H3, 49–51.5 GB for Qwen3-VL-32B and about 5.8 GB for the video/audio VAEs. The combined working set exceeded a 96 GB RTX PRO 6000, so a job could trigger model swaps; an H200-class host could keep more resident. These are observed deployment footprints of our graph, not MiniMax's universal minimum requirements.
+
+Source-reference length and resolution can dominate the token budget. A longer source also means more frames to encode and more context to attend to. On a comparable 15-second replacement, a low-power Max-Q rental took roughly 48–50 minutes, while full-power server variants were substantially faster. In one host, reloading weights from a slow overlay disk added about **9.6–12.6 minutes** after switching between H3 and another image model. A “high RAM” launch cut loading time on one attempt but exhausted the host's swap and slowed inference badly, so we rolled it back. Grouping queued jobs by warm model and keeping keyframe generation off the H3 GPU were safer fixes.
+
+Rental infrastructure introduced another kind of failure: a preemptible VM stopped several times during production, and some work was lost. A saved model snapshot reduced setup work on the next host, but a queue status alone did not prove the last video existed or was viewable. For cost accounting we separate startup, encoding, sampling, decoding, transfer and human QC. Hardware power limit, source-token budget and cold-start behavior often mattered more than a fashionable sampler option.
+
+## 10. Failure taxonomy, not just a list of bad clips
+
+The overnight batch was the clearest system failure, but earlier campaigns exposed distinct mechanisms. In a 28–31 October review, **63 of 82** takes were rejected and none of 38 planned shots was accepted as a complete shot. A separate 25 October batch of 38 clips was rejected for logic and visual errors. These counts are retrospective Studio records; they are not a controlled model benchmark and the rejection criteria varied by production task.
+
+| Symptom seen in a reviewed take | Source or workflow cause recorded | Production check added |
+|---|---|---|
+| Original room survives a world change | Character-replacement route was asked to preserve the source scene | Choose world-change role and supply target guides |
+| Original performer stays while target appears beside them | Source video assigned “motion and camera” role for a performer-replacement task | Explicit performer map and first-frame check |
+| Identity or anatomy drifts | Incorrect or missing guide; inconsistent face/body references | Verify every prepared frame against character bible before render |
+| Requested cuts arrive late or disappear | Text ranges, arbitrary trims, sub-second shots | Inspect source edits; cut segments at edits; explicit cut wording |
+| Late source angles vanish | Only first seconds of a long source were fed into a short job | Review full source and label segment 1 of N |
+| Props or costumes from another segment appear | Whole-film synopsis was inserted into a short-segment prompt | Prompt only the seconds being generated |
+| A source person gets a forbidden item | Negated prose repeated the unwanted object or source costume | Describe desired appearance positively and inspect compiled prompt |
+| Camera form controls seem ineffective | Studio dropped some IR-route control fields before inference | Trace actual payload and graph, then test model behavior |
+| Completed jobs are still unusable | Automated QC watched statuses and thumbnails, not full video/audio | Review a complete first take before queue expansion |
+
+Some rows are strong workflow diagnoses; others are hypotheses from a small number of failures. We keep the rejected job and its input package in the internal ledger so a rule can be revisited. The most damaging mistake was organizational: twenty-plus paid outputs were generated while the first could have been watched and rejected early.
+
+## 11. What is still contradictory or untested
+
+The evidence does not support a single neat “best settings” recipe. An early accepted clip used Fast cache, although later production reviews rejected Fast for eye and motion artifacts. The accepted world-change file records cache off, while a later route used Safe after the user's A/B approval. One successful scene used eight images despite earlier warnings that many images dilute identity. Ranged cuts failed in two direct tests but worked when aligned with source edits. These are distinctions to preserve, not inconvenient entries to delete.
+
+The synthetic control map suggested that lighting, timed acting and camera movement responded more consistently than lens length, depth-of-field wording or rack-focus requests. However the official MiniMax examples themselves describe focus changes, and our map came largely from one rejected synthetic scene. Whether those optical controls work under different staging, references and seeds remains open. The same caution applies to attention maps: a token receiving more sampled attention per position is a useful diagnostic, not proof that it caused a better video.
+
+Next defensible experiments are multi-seed tests on *accepted character footage*: explicit versus range cuts when the source edit agrees or disagrees; guide-frame placement inside long shots; `ref_image_size` quality at close-ups; and source-video preprocessing at fixed output settings. Each needs visual and audio review, not only MD5, PSNR or a successful queue result.
 
 ## Evidence ledger and unresolved questions
 
