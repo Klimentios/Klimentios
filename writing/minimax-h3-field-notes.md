@@ -41,3 +41,6 @@ I also ran smaller probes around shot timing, optics, and attention controls. So
 My working conclusion: the quality of an H3 video transformation depends heavily on assigning clear roles to the reference video, target-world frames, character images, and shot plan. Better wording cannot fully rescue conflicting inputs.
 
 *Disclosure: These results are from my own Studio workflow. The underlying character footage and internal job logs are private; the A/B values and acceptance boundaries above come from those logs.*
+
+
+**Cache note.** Safe is a cache setting in my Studio inference workflow, not an official H3 model variant. The measured 23% is specific to the accepted scene and setup above.
