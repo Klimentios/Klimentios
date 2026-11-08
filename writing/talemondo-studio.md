@@ -2,9 +2,13 @@
 
 *A public, noncommercial edition of my local AI video production studio. Published 8 November 2026.*
 
-[**Explore the source and installation guide**](https://github.com/Klimentios/talemondo-studio) · [**Read my MiniMax H3 field study**](minimax-h3-field-notes.md)
+[**Explore the source and installation guide**](https://github.com/Klimentios/talemondo-studio) · [**Watch the 25-second interface tour**](media/talemondo/studio-interface-tour.mp4) · [**Jump to seven video examples**](#video-gallery) · [Read my MiniMax H3 field study](minimax-h3-field-notes.md)
 
 I built TaleMondo Studio because a video model is only one part of making a scene. A production also needs reference management, a shot plan, a render queue, a way to reject bad takes, and a route from accepted clips to an edit. The [public repository](https://github.com/Klimentios/talemondo-studio) contains the Mac application, GPU-side code, ComfyUI integration, MCP server, setup scripts and documentation. It is a code release, not a claim that every workflow has passed a fresh end-to-end GPU test on another machine.
+
+[![A real TaleMondo Studio character project with world and character references](media/talemondo/studio-franchise-overview.png)](https://github.com/Klimentios/talemondo-studio)
+
+*A character project in my working Studio. Its private board notes and source files are outside the image.*
 
 ## The production path
 
@@ -25,21 +29,13 @@ These are direct screenshots of the Studio interface in English. The generation,
 
 ![TaleMondo Studio production workspaces in English](media/talemondo/studio-workspaces.png)
 
-**A real franchise overview:** the working Studio links a world and character guide to visual reference cards. The capture below shows the project overview; production notes and private source files are outside the image.
+The [project overview above](media/talemondo/studio-franchise-overview.png) links a world and character guide to visual reference cards. The three screens below show the workspace controls in a separate showcase session.
 
-![TaleMondo Studio franchise overview with character references](media/talemondo/studio-franchise-overview.png)
+| Video generation | Scene board | Custom ComfyUI workflows |
+|:---:|:---:|:---:|
+| ![Reference roles, shot prompt, director controls and render queue](media/talemondo/studio-video-generation.png) | ![Scene materials, shots and film assembly](media/talemondo/studio-scene-board.png) | ![ComfyUI graph import and workflow management](media/talemondo/studio-custom-workflows.png) |
 
-**Video generation:** reference roles, the shot prompt, duration, format, quality, variants, director controls, and the local queue in one workspace.
-
-![TaleMondo Studio video generation workspace in English](media/talemondo/studio-video-generation.png)
-
-**Scene board:** one workspace connects scene materials, individual shots and the final film. The isolated capture starts with one empty five-second shot; it shows planning controls, not a rendered film.
-
-![TaleMondo Studio scene board in English](media/talemondo/studio-scene-board.png)
-
-**Custom workflows:** a ComfyUI graph can be imported from JSON, a connected ComfyUI instance, or an existing job or recipe. The separate showcase data directory has no imported graphs yet.
-
-![TaleMondo Studio custom ComfyUI workflows page in English](media/talemondo/studio-custom-workflows.png)
+Video generation puts reference roles, prompts, duration, format, quality, variants, director controls and the queue together. The scene board connects materials, shots and the film; this isolated capture has one empty five-second shot. Custom Workflows accepts a graph from JSON, connected ComfyUI, a job or a recipe; no graphs were imported into the showcase session.
 
 ## The ComfyUI-to-Studio loop
 
