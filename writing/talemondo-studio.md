@@ -17,6 +17,8 @@ I built TaleMondo Studio because a video model is only one part of making a scen
 3. **Prepare and render.** Studio compiles the shot into an H3 job, checks the input and required ComfyUI capabilities, then places it in a local queue. The Mac UI and project data stay local; a connected NVIDIA GPU server runs ComfyUI and H3. A completed queue entry is a saved output, not automatic approval of its visual or audio quality.
 4. **Review and edit.** Takes remain attached to their jobs and source settings. The creator can compare, accept or reject them, assemble a scene and work with the montage and export tools. Some editor integrations have separate compatibility limits documented in the repository; I do not treat the presence of an export button as proof of a finished film.
 
+**Queue and review are separate steps.** Studio checks a job before sending it, records it in the queue, and keeps the resulting MP4 and job settings available for take review. A completed status means the file arrived; it does not approve the acting, identity, timing or audio. The creator can inspect the take before accepting it for a scene assembly or an edit. The public source exposes these paths in the [worker](https://github.com/Klimentios/talemondo-studio/blob/main/local_studio/worker.py) and [agent tools](https://github.com/Klimentios/talemondo-studio/blob/main/scripts/h3_studio_mcp.py).
+
 This is why I call it a studio rather than an H3 prompt form: references, story structure, GPU execution, review and editing share one project context.
 
 ## Inside the Studio

@@ -6,7 +6,7 @@ I run the released **MiniMax H3-Base** on rented GPUs for original character pro
 
 **Data:** The [measurement ledger](minimax-h3-evidence.md) publishes settings, timing A/B, take IDs and probe counts.
 
-**Production system:** The research grew out of [TaleMondo Studio](https://github.com/Klimentios/talemondo-studio), my local application for references, scenes, GPU jobs, take review, editing, ComfyUI graphs and MCP access for Claude Code and Codex. Its [product walkthrough and seven video examples](talemondo-studio.md) show the wider filmmaking workflow. Those gallery clips are visual context, not additional controlled A/B evidence.
+**Production system:** The research grew out of [TaleMondo Studio](https://github.com/Klimentios/talemondo-studio), my local application for references, scenes, GPU jobs, take review, editing, ComfyUI graphs and MCP access for Claude Code and Codex. Its [product walkthrough and seven video examples](talemondo-studio.md) show the wider filmmaking workflow. Those gallery clips are visual context, not additional controlled A/B evidence. The [working-Studio gallery](talemondo-studio.md#in-my-working-studio) shows the populated scene graph, reference library, franchise boards and channel analytics. The H3 path queues work on a connected GPU and separates completed jobs from human-reviewed takes.
 
 ## The model and the actual input path
 
