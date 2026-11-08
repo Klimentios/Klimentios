@@ -15,6 +15,18 @@ I built TaleMondo Studio because a video model is only one part of making a scen
 
 This is why I call it a studio rather than an H3 prompt form: references, story structure, GPU execution, review and editing share one project context.
 
+## Inside the Studio
+
+These are direct screenshots of the public Studio build in English, opened with a separate empty data directory. They show the actual interface without my private projects or render history. An empty queue and an offline GPU in the captures reflect that isolated showcase session, not a completed production run.
+
+**Video generation:** reference roles, the shot prompt, duration, format, quality, variants, director controls, and the local queue in one workspace.
+
+![TaleMondo Studio video generation workspace in English](media/talemondo/studio-video-generation.png)
+
+**Custom workflows:** a ComfyUI graph can be imported from JSON, a connected ComfyUI instance, or an existing job or recipe. The separate showcase data directory has no imported graphs yet.
+
+![TaleMondo Studio custom ComfyUI workflows page in English](media/talemondo/studio-custom-workflows.png)
+
 ## ComfyUI without losing the production context
 
 The built-in H3 route exposes quality and director controls, including guides at specific frames, sampling settings, model profiles and optional LoRAs. The separate **Custom Workflows** area can import a ComfyUI API graph, identify inputs, turn them into a Studio form and queue the graph on a connected ComfyUI server. Its graph editor can change values, nodes and links, record versions and bring a graph back from a job or recipe. These are actual modules and endpoints in the public code; compatibility still depends on the installed nodes and models on a live server.
