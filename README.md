@@ -12,6 +12,10 @@ I build software and AI products for real work and business. I work with models,
 
 I also work on infrastructure and other products. This profile will grow with the projects I publish.
 
+## Field notes
+
+- [MiniMax H3: reference video, character identity, and render cost](./writing/minimax-h3-field-notes.md) — observations from my own production workflow, with measured limits.
+
 ## Connect
 
 [Reddit](https://www.reddit.com/user/Due_Investigator1455/) · [Hugging Face](https://huggingface.co/klimentioss)
