@@ -4,6 +4,8 @@
 
 I run the released **MiniMax H3-Base** on rented GPUs for original character projects. My hard task is preserving a source video's actions, camera and edit while replacing performers, or replacing both performers and the world. A plausible clip can still fail the assignment. I consolidated our render logs, code probes, shot reviews and accepted/rejected takes. This article publishes the useful parameters and limits of that evidence.
 
+**Data:** The [measurement ledger](minimax-h3-evidence.md) publishes the recorded settings, timing A/B, take IDs, probe counts and contradictory cases behind this account.
+
 ## The model and the actual input path
 
 MiniMax describes the full system as **Context-IR → H3-Base → Regenerate-2K**. Context-IR and Regenerate-2K are hosted components. Our local work uses **H3-Base**, mainly the **Ref2VA** checkpoint. FL2VA is a distinct first/last-frame checkpoint. “Character swap,” “motion and camera,” and “world swap” below are *Studio workflow roles*, not official MiniMax model variants. [MiniMax's model card](https://huggingface.co/MiniMaxAI/MiniMax-H3) specifies at most nine images, three videos (15 seconds combined), three audio clips (15 seconds combined) and 12 mixed files in Ref2VA, with 24 fps output, native 32 kHz stereo audio and 4–15-second clips.
@@ -75,7 +77,7 @@ The production rule that followed is concrete: map source cuts → assign input 
 
 ## Evidence ledger and unresolved questions
 
-These identifiers and measurements come from KADRIA / H3 Studio records. IDs are internal identifiers, not public video links. The source media and full logs are not attached here, so external readers cannot independently reproduce the visual verdicts. The table gives parameters and scope instead of implying a public benchmark.
+These identifiers and measurements come from KADRIA / H3 Studio records and are expanded in the [published ledger](minimax-h3-evidence.md). IDs are internal identifiers, not public video links. The source media and full logs are not attached here, so external readers cannot independently reproduce the visual verdicts. The table gives parameters and scope instead of implying a public benchmark.
 
 | Evidence | Claim status |
 |---|---|
