@@ -6,6 +6,8 @@ I run the released **MiniMax H3-Base** on rented GPUs for original character pro
 
 **Data:** The [measurement ledger](minimax-h3-evidence.md) publishes settings, timing A/B, take IDs and probe counts.
 
+**Production system:** The research grew out of [TaleMondo Studio](https://github.com/Klimentios/talemondo-studio), my local application for references, scenes, GPU jobs, take review, editing, ComfyUI graphs and MCP access for Claude Code and Codex. Its [product walkthrough and seven video examples](talemondo-studio.md) show the wider filmmaking workflow. Those gallery clips are visual context, not additional controlled A/B evidence.
+
 ## The model and the actual input path
 
 MiniMax describes the full system as **Context-IR → H3-Base → Regenerate-2K**. Context-IR and Regenerate-2K are hosted components. Our local work uses **H3-Base**, mainly the **Ref2VA** checkpoint. FL2VA is a distinct first/last-frame checkpoint. “Character swap,” “motion and camera,” and “world swap” below are *Studio workflow roles*, not official MiniMax model variants. [MiniMax's model card](https://huggingface.co/MiniMaxAI/MiniMax-H3) specifies at most nine images, three videos (15 seconds combined), three audio clips (15 seconds combined) and 12 mixed files in Ref2VA, with 24 fps output, native 32 kHz stereo audio and 4–15-second clips.
@@ -186,6 +188,7 @@ Two contradictions remain useful. Some earlier accepted clips used Fast cache de
 
 - [MiniMax H3 model card](https://huggingface.co/MiniMaxAI/MiniMax-H3): primary source for architecture, input limits, variants and official request examples.
 - [MiniMax H3 repository and prompt references](https://github.com/MiniMax-AI/MiniMax-H3): primary source for released code and guides.
+- [Comfy-Org native H3 nodes](https://github.com/Comfy-Org/ComfyUI/blob/master/comfy_extras/nodes_minimax_h3.py) and [Kijai's ComfyUI-KJNodes](https://github.com/kijai/ComfyUI-KJNodes): upstream tools used in the Studio ecosystem. MiniMax created H3; Kijai's community tooling supports optional Studio paths, including color matching. Neither is an author of this field study.
 - KADRIA / H3 Studio internal `MINIMAX_H3_RESEARCH.md`, `H3_ENCODER_RESEARCH.md`, timing reports, approved-recipe records and user decisions, consolidated 8 November 2026: first-party source for every local measurement and verdict in this article.
 
 *Kliment / KADRIA Studio. These local A/B runs used rented GPUs and H3-Base, not the hosted Context-IR or Regenerate-2K stages.*
