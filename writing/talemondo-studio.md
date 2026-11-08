@@ -17,7 +17,15 @@ This is why I call it a studio rather than an H3 prompt form: references, story 
 
 ## Inside the Studio
 
-These are direct screenshots of the public Studio build in English, opened with a separate empty data directory. They show the actual interface without my private projects or render history. An empty queue and an offline GPU in the captures reflect that isolated showcase session, not a completed production run.
+These are direct screenshots of the Studio interface in English. The generation, scene-board and workflow screens use a separate empty data directory, so they contain no private projects or render history. The franchise overview and workspace navigation come from my working Studio; they show a real character project and the available production areas without exposing its internal board notes. An empty queue and an offline GPU in the isolated captures are the state of that showcase session, not a completed production run.
+
+**One production environment, several workspaces:** scene planning, franchise worlds, materials, voice-over and editing are connected from the agent's starting page.
+
+![TaleMondo Studio production workspaces in English](media/talemondo/studio-workspaces.png)
+
+**A real franchise overview:** the working Studio links a world and character guide to visual reference cards. The capture below shows the project overview; production notes and private source files are outside the image.
+
+![TaleMondo Studio franchise overview with character references](media/talemondo/studio-franchise-overview.png)
 
 **Video generation:** reference roles, the shot prompt, duration, format, quality, variants, director controls, and the local queue in one workspace.
 
