@@ -23,7 +23,7 @@ This is why I call it a studio rather than an H3 prompt form: references, story 
 
 **[Watch the 25-second Studio interface tour](media/talemondo/studio-interface-tour.mp4).** It shows the working franchise overview, the isolated generation, scene-board and ComfyUI workflow screens, then short excerpts from three gallery clips. This is an edited visual tour without audio, not a screen recording of a live GPU render or a ComfyUI round trip. The individual clips and their audio are below.
 
-These are direct screenshots of the Studio interface. The generation, scene-board and workflow screens use a separate empty data directory, so they contain no private projects or render history. The franchise overview and workspace navigation come from my working Studio; they show a real character project and the available production areas without exposing its internal board notes. An empty queue and an offline GPU in the isolated captures are the state of that showcase session, not a completed production run.
+The first set contains direct screenshots of the Studio interface. The generation, scene-board and workflow screens use a separate empty data directory, so they contain no saved projects or render history. The populated production captures below show my real Studio. The franchise overview and workspace navigation come from my working Studio; they show a real character project and the available production areas without exposing its internal board notes. An empty queue and an offline GPU in the isolated captures are the state of that showcase session, not a completed production run.
 
 **One production environment, several workspaces:** scene planning, franchise worlds, materials, voice-over and editing are connected from the agent's starting page.
 
@@ -36,6 +36,20 @@ The [project overview above](media/talemondo/studio-franchise-overview.png) link
 | ![Reference roles, shot prompt, director controls and render queue](media/talemondo/studio-video-generation.png) | ![Scene materials, shots and film assembly](media/talemondo/studio-scene-board.png) | ![ComfyUI graph import and workflow management](media/talemondo/studio-custom-workflows.png) |
 
 Video generation puts reference roles, prompts, duration, format, quality, variants, director controls and the queue together. The scene board connects materials, shots and the film; this isolated capture has one empty five-second shot. Custom Workflows accepts a graph from JSON, connected ComfyUI, a job or a recipe; no graphs were imported into the showcase session.
+
+## In my working Studio
+
+The earlier captures show the controls clearly. These six screenshots show what the same product looks like with actual production data: projects, franchise boards, character references, a connected scene graph, and channel analytics. Some project names and saved creative notes in the screenshots are in Russian; the public article and interface labels are in English. The analytics screen is a dated view of connected accounts, not a claim about results produced by the Studio software.
+
+| Starting point | Scene graph | Source library |
+|:---:|:---:|:---:|
+| [![Project cards, chat, and creation workspace](https://raw.githubusercontent.com/Klimentios/talemondo-studio/main/docs/media/working-studio-home.png)](https://github.com/Klimentios/talemondo-studio/blob/main/docs/media/working-studio-home.png) | [![Characters and materials connected to scene shots](https://raw.githubusercontent.com/Klimentios/talemondo-studio/main/docs/media/working-scene-graph.png)](https://github.com/Klimentios/talemondo-studio/blob/main/docs/media/working-scene-graph.png) | [![Character looks and asset collections](https://raw.githubusercontent.com/Klimentios/talemondo-studio/main/docs/media/working-reference-library.png)](https://github.com/Klimentios/talemondo-studio/blob/main/docs/media/working-reference-library.png) |
+
+| Franchise canvas | Character profiles | Channel analytics |
+|:---:|:---:|:---:|
+| [![World rules and franchise planning board](https://raw.githubusercontent.com/Klimentios/talemondo-studio/main/docs/media/working-franchise-canvas.png)](https://github.com/Klimentios/talemondo-studio/blob/main/docs/media/working-franchise-canvas.png) | [![Visual character profiles in the franchise board](https://raw.githubusercontent.com/Klimentios/talemondo-studio/main/docs/media/working-franchise-characters.png)](https://github.com/Klimentios/talemondo-studio/blob/main/docs/media/working-franchise-characters.png) | [![Recent video posts and channel metrics](https://raw.githubusercontent.com/Klimentios/talemondo-studio/main/docs/media/working-channel-analytics.png)](https://github.com/Klimentios/talemondo-studio/blob/main/docs/media/working-channel-analytics.png) |
+
+Here the workflow is concrete: the creator starts a task, gathers assets, builds the franchise and scene context, connects characters and environment to shots, sends approved jobs to the GPU queue, reviews takes, and assembles a cut. Channel analytics helps track published work afterward. These screenshots show saved data and working UI, not a live render or a measured end-to-end benchmark.
 
 ## The ComfyUI-to-Studio loop
 
