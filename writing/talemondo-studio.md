@@ -1,14 +1,22 @@
-# TaleMondo Studio: from references to a reviewed video cut
+# TaleMondo Studio for MiniMax H3: direct a scene, guide an agent, finish a film
 
 *A public, noncommercial edition of my local AI video production studio. Published 8 November 2026.*
 
 [**Explore the source and installation guide**](https://github.com/Klimentios/talemondo-studio) · [**Watch the 25-second interface tour**](media/talemondo/studio-interface-tour.mp4) · [**Jump to seven video examples**](#video-gallery) · [Read my MiniMax H3 field study](minimax-h3-field-notes.md)
 
-I built TaleMondo Studio because a video model is only one part of making a scene. A production also needs reference management, a shot plan, a render queue, a way to reject bad takes, and a route from accepted clips to an edit. The [public repository](https://github.com/Klimentios/talemondo-studio) contains the Mac application, GPU-side code, ComfyUI integration, MCP server, setup scripts and documentation. It is a code release, not a claim that every workflow has passed a fresh end-to-end GPU test on another machine.
+I built TaleMondo Studio as a production system for my MiniMax H3 work. I can start with an idea in chat or work directly in the interface. The Studio keeps a franchise world, character and location references, scene and shot plans, camera direction, H3 jobs, take reviews and editing in the same project. Its agent tools can carry out the preparation steps with me: read the existing material, draft a scene, connect references to shots, check staging, prepare generation, follow the queue and help assemble a cut. I decide when the story is ready, when GPU work is authorized and which take is accepted.
+
+This is the distinctive part of the product: the agent works inside the same production context as the creator, instead of receiving a disconnected prompt for each clip. The [public repository](https://github.com/Klimentios/talemondo-studio) contains the Mac application, GPU-side code, ComfyUI integration, MCP server and setup scripts. The documented H3 generation path uses ComfyUI on a connected NVIDIA GPU.
 
 [![A real TaleMondo Studio character project with world and character references](media/talemondo/studio-franchise-overview.png)](https://github.com/Klimentios/talemondo-studio)
 
 *A character project in my working Studio. Its private board notes and source files are outside the image.*
+
+## What the Studio can do with me
+
+A creator can give the Studio agent a franchise and an idea. Its production playbooks expose a concrete sequence: find the idea and related images; build a package of characters, places, look and mode; draft and approve the story; stage heroes and camera on a floor plan; draft the scene; check shots; place the result on the canvas; and, when authorized, submit H3 work to the GPU queue. For an existing scene, the agent can read its board, resolve reference assets, validate a production spec, check staging, inspect job receipts and move into review and editing. These are [real MCP playbooks and tools](https://github.com/Klimentios/talemondo-studio/blob/main/scripts/h3_studio_mcp.py), not a promise that every idea automatically becomes a finished film.
+
+**Direction is more than a free-text prompt.** Studio offers named presets for shot size and angle, lens look, camera movement, focus, light, colour, visual style and acting. The creator can set scene defaults and override them shot by shot. The Studio compiles these choices into the job request and checks the graph's capabilities before queueing. Camera-brand choices describe an intended image character; they do not turn H3 into a physical ARRI or Sony camera. The [preset catalog](https://github.com/Klimentios/talemondo-studio/blob/main/preview/h3-director/director-presets.mjs) and [shot compiler](https://github.com/Klimentios/talemondo-studio/blob/main/preview/h3-director/scene-queue.mjs) show the implementation.
 
 ## The production path
 
@@ -19,7 +27,7 @@ I built TaleMondo Studio because a video model is only one part of making a scen
 
 **Queue and review are separate steps.** Studio checks a job before sending it, records it in the queue, and keeps the resulting MP4 and job settings available for take review. A completed status means the file arrived; it does not approve the acting, identity, timing or audio. The creator can inspect the take before accepting it for a scene assembly or an edit. The public source exposes these paths in the [worker](https://github.com/Klimentios/talemondo-studio/blob/main/local_studio/worker.py) and [agent tools](https://github.com/Klimentios/talemondo-studio/blob/main/scripts/h3_studio_mcp.py).
 
-This is why I call it a studio rather than an H3 prompt form: references, story structure, GPU execution, review and editing share one project context.
+That shared context is what lets a creator or agent move from an idea to a reviewed sequence without rebuilding the project from scratch for every shot.
 
 ## Inside the Studio
 

@@ -7,7 +7,7 @@ I build software and AI products for real work and business. I work with models,
 ## Projects
 
 - **OLA Cy** — a product for Cyprus.
-- **[TaleMondo Studio](https://github.com/Klimentios/talemondo-studio)** — a local, noncommercial AI video studio for MiniMax H3, with scenes, references, GPU rendering, take review, ComfyUI workflows and agent tools.
+- **[TaleMondo Studio](https://github.com/Klimentios/talemondo-studio)** — my noncommercial AI filmmaking Studio for MiniMax H3. Its agents help plan scenes, assign references, direct shots, prepare GPU jobs, review takes and assemble an edit.
 - **[NEONEXUS](https://github.com/Klimentios/neonexus)** — an open-source workspace for AI agents and human-reviewed code.
 
 I also work on infrastructure and other products. This profile will grow with the projects I publish.
